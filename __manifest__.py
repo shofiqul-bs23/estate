@@ -1,15 +1,11 @@
 {
-    'name': '$ModuleName',
-    'version': 'Version',
-    'summary': 'Summery',
-    'description': 'Description',
-    'category': 'Category',
-    'author': 'Author',
-    'website': 'Website',
-    'license': 'License',
-    'depends': ['Depends'],
-    'data': ['Data'],
-    'demo': ['Demo'],
+    'name': 'estate',
+    'version': '1.0',
+    'summary' : 'testing',
+    'description': 'A Real Estate Module',
+    'category': 'realestate',
+    'author': 'shofiqul',
+    'depends': ['base'],
     'installable': True,
     'auto_install': False
 }
