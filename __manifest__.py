@@ -7,5 +7,6 @@
     'author': 'shofiqul',
     'depends': ['base'],
     'installable': True,
-    'auto_install': False
+    'auto_install': False,
+    'application' : True
 }
