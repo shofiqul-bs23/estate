@@ -1,7 +1,7 @@
 from odoo import fields, models
 
 
-class EstatePropertyType(models.Model):
+class EstatePropertyOffer(models.Model):
     _name = 'estate.property.offer'
     _description = 'Contain the offers that has been given to property'
 
