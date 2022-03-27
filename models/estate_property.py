@@ -1,9 +1,11 @@
 import odoo.odoo.fields
-from odoo import fields, models
+from odoo import fields, models , api
 #from odoo.odoo import fields
 from dateutil.relativedelta import relativedelta
 def getThreeMonthLaterDate():
     return fields.Date.today() + relativedelta(months=3)
+
+
 
 class EstateProperty(models.Model):
     _name = 'estate.property'
@@ -43,5 +45,16 @@ class EstateProperty(models.Model):
     tag_ids = fields.Many2many('estate.property.tag')
 
     offer_ids = fields.One2many('estate.property.offer','property_id',string='Offers')
+
+    total_area = fields.Float(compute = '_compute_total_area')
+    # best_price = fields.Float(compute = '_compute_highest_offer')
+
+
+    # @api.depends('living_area', 'garden_area')
+    # def _compute_total_area(self):
+    #     for record in self:
+    #         record.total_area = record.living_area + record.garden_area
+
+
 
 
