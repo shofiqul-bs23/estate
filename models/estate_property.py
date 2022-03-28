@@ -1,4 +1,4 @@
-import odoo.odoo.fields
+import odoo
 from odoo import fields, models , api
 #from odoo.odoo import fields
 from dateutil.relativedelta import relativedelta
@@ -72,6 +72,23 @@ class EstateProperty(models.Model):
         else:
             self.garden_orientation = ''
             self.garden_area = 0
+
+
+    def set_as_sold(self):
+        for record in self:
+            if self.state != 'canceled':
+                self.state = 'sold'
+            else:
+                raise odoo.exceptions.UserError("Canceled property can not be sold!")
+        return True
+
+    def set_as_canceled(self):
+        for record in self:
+            if self.state != 'sold':
+                self.state = "canceled"
+            else:
+                raise odoo.exceptions.UserError("Sold property can not be canceled!")
+        return True
 
 
 

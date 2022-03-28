@@ -1,4 +1,5 @@
 from odoo import fields, models, api
+import odoo
 from dateutil.relativedelta import relativedelta
 
 
@@ -35,5 +36,24 @@ class EstatePropertyOffer(models.Model):
             delta = date_deadline_datetime - create_date_datetime
 
             record.validity = delta.days
+
+    def offer_accept(self):
+        for record in self:
+            if record.status != 'refused' and record.property_id.state in ['new','offer_received']:
+                record.status = "accepted"
+                record.property_id.selling_price = record.price
+                record.property_id.buyer_id = record.partner_id
+                record.property_id.state = 'offer_accepted'
+            else:
+                raise odoo.exceptions.UserError("The offer has been rejected before or The Property is no longer available.")
+        return True
+
+    def offer_reject(self):
+        for record in self:
+            if record.status != 'accepted':
+                record.status = "refused"
+            else:
+                raise odoo.exceptions.UserError("The offer has already been accepted!")
+        return True
 
 

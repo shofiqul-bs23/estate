@@ -30,8 +30,14 @@
         <field name="arch" type="xml">
             <form string="TEST">
 
+                <header>
+                    <button name="set_as_sold" type="object" string="SOLD"/>
+                    <button name="set_as_canceled" type="object" string="Canceled"/>
+                </header>
+
                 <sheet>
                     <group>
+                        <field name="state"/>
                         <field name="name"/>
                         <field name="tag_ids" widget="many2many_tags"/>
                     </group>
@@ -44,7 +50,7 @@
                         </group>
                         <group>
                             <field name="expected_price"/>
-                            <field name="best_offer" string = 'Best Offer'/>
+                            <field name="best_offer" string='Best Offer'/>
                             <field name="selling_price"></field>
                         </group>
                     </group>
@@ -61,7 +67,7 @@
                                 <field name="garden_area" string="Garden Area (sqm)"/>
                                 <field name="garden_orientation"/>
                                 <field name="active"/>
-                                <field name="state"/>
+<!--                                <field name="state"/>-->
                                 <field name="total_area" string="Total Area (sqm)"/>
                             </group>
                         </page>
