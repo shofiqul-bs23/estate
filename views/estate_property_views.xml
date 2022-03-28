@@ -97,6 +97,8 @@
     </record>
 
 
+
+
     <record id="estate_property_search" model="ir.ui.view">
         <field name="name">estate.property.search</field>
         <field name="model">estate.property</field>
@@ -113,6 +115,7 @@
             <filter String="Available" name="Available Homes"
                     domain="['|',('state','=','new'),('state','=','offer_received')]"/>
             <filter string="Postcode" name="postcode" context="{'group_by':'postcode','residual_visible':True}"/>
+
         </field>
     </record>
 

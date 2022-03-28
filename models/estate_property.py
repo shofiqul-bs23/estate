@@ -39,8 +39,8 @@ class EstateProperty(models.Model):
 
     property_type_id = fields.Many2one('estate.property.type')
     # salesperson_id = fields.Many2one('')
-    salesperson_id = fields.Many2one('res.users', string='Salesperson', index=True, tracking=True, default=lambda self: self.env.user)
-    buyer_id = fields.Many2one('res.partner', string='Buyer', index=True, tracking=True)
+    salesperson_id = fields.Many2one('res.users', string='Salesperson', index=True, default=lambda self: self.env.user)
+    buyer_id = fields.Many2one('res.partner', string='Buyer', index=True)
 
     tag_ids = fields.Many2many('estate.property.tag')
 
@@ -50,6 +50,10 @@ class EstateProperty(models.Model):
 
     best_offer = fields.Float(compute = '_compute_best_offer')
 
+    _sql_constraints = [
+        ('check_expected_price', 'CHECK(expected_price > 0)', 'The Expected Price must be strictely positive!'),
+        ('check_selling_price', 'CHECK(selling_price >0)','Selling Price must be possitive.')
+    ]
 
     @api.depends('living_area', 'garden_area')
     def _compute_total_area(self):
@@ -90,5 +94,10 @@ class EstateProperty(models.Model):
                 raise odoo.exceptions.UserError("Sold property can not be canceled!")
         return True
 
+    @api.constrains('expected_price', 'selling_price')
+    def _check_price_conflict(self):
+        for record in self:
+            if record.selling_price>0 and record.selling_price < (record.expected_price * .9):
+                raise odoo.exceptions.ValidationError('Selling price can not be very lower then expected price.')
 
 
