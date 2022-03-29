@@ -26,7 +26,13 @@
                     <group>
 
                         <field name="name"/>
-
+                        <field name="property_ids">
+                            <tree>
+                                <field name="name" string="Title"/>
+                                <field name="expected_price"/>
+                                <field name="state" string="Status"/>
+                            </tree>
+                        </field>
                     </group>
                 </sheet>
             </form>

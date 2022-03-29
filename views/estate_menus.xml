@@ -6,6 +6,8 @@
         <menuitem id="estate_property_type_first_level_menu" name="Settings">
             <menuitem id="estate_property_type_menu_action" action="estate_property_type_action" name="Property Type"/>
             <menuitem id="estate_property_tag_menu_action" action="estate_property_tag_action" name="Property Tag"/>
+            <menuitem id="estate_property_offer_menu_action" action="estate_property_offer_action" name="Property Offer"/>
+
         </menuitem>
         <!--<menuitem id="estate_property_type_first_level_menu" name="Settings">
             <menuitem id="estate_property_type_menu_action" action="estate_property_type_action" name="Property_Type"/>

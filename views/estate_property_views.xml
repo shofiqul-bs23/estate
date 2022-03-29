@@ -33,11 +33,12 @@
                 <header>
                     <button name="set_as_sold" type="object" string="SOLD"/>
                     <button name="set_as_canceled" type="object" string="Canceled"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold,canceled"/>
                 </header>
 
                 <sheet>
                     <group>
-                        <field name="state"/>
+<!--                        <field name="state"/>-->
                         <field name="name"/>
                         <field name="tag_ids" widget="many2many_tags"/>
                     </group>
