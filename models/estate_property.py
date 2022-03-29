@@ -10,7 +10,7 @@ def getThreeMonthLaterDate():
 class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'This is the basic model to hold information about the property.'
-
+    _order = 'id desc'
     name = fields.Char(required = True)
     description = fields.Text()
     postcode = fields.Char()
@@ -68,6 +68,13 @@ class EstateProperty(models.Model):
                 record.best_offer = max(record.offer_ids.mapped('price'))
             else:
                 record.best_offer = 0
+
+    @api.onchange('offer_ids')
+    def _check_if_offer_received(self):
+        for record in self:
+            if len(record.offer_ids) and record.state == 'new':
+                record.state = 'offer_received'
+
 
     @api.onchange('garden')
     def _onchange_garden(self):
