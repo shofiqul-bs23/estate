@@ -12,6 +12,7 @@
         <field name="arch" type="xml">
             <tree string="Channel">
                 <field name="name"/>
+                <field name="offer_count" string="Offer Count"/>
                 <field name="sequence" widget="handle"/>
             </tree>
         </field>
@@ -23,7 +24,19 @@
         <field name="model">estate.property.type</field>
         <field name="arch" type="xml">
             <form string="TEST">
+
+                    <button class="oe_stat_button" type="action" icon="fa-ticket"
+                            name="%(estate_property_offer_action)d">
+                        <field name="offer_count" string="Offers" widget="statinfo"/>
+                    </button>
+
                 <sheet>
+                    <!--                    <button class="oe_stat_button" type="action" icon="fa-ticket"-->
+                    <!--                            name="%(estate_property_offer_action)d">-->
+                    <!--                        <field name="offer_count" string="Offers" widget="statinfo"/>-->
+                    <!--                    </button>-->
+
+
                     <notebook>
                         <page string='Properties'>
                             <field name="property_ids">

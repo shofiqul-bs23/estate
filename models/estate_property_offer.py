@@ -16,6 +16,9 @@ class EstatePropertyOffer(models.Model):
 
     validity = fields.Integer(default = 7)
     date_deadline = fields.Date(compute = '_calculate_date_deadline', inverse = '_inverse_date_deadline')
+    property_type_id = fields.Many2one(related='property_id.property_type_id' ,
+                                       store=True)
+
 
     _sql_constraints = [
         ('check_offer_price','CHECK(price > 0)','Offer price must be strictly positive.')
@@ -60,5 +63,15 @@ class EstatePropertyOffer(models.Model):
             else:
                 raise odoo.exceptions.UserError("The offer has already been accepted!")
         return True
+
+    @api.model
+    def create(self, vals):
+        p_id = vals['property_id']
+        property = self.env['estate.property'].browse(p_id)
+        property.state = 'offer_received'
+
+        if vals['price'] < self.env['estate.property'].browse(p_id).best_offer:
+            raise odoo.exceptions.UserError("Offers can not be lower than the Current Best offer!")
+        return super(EstatePropertyOffer,self).create(vals)
 
 

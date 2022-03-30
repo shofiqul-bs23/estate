@@ -43,8 +43,11 @@
                 <header>
                     <button states="new" name="set_as_sold" type="object" string="SOLD"/>
                     <button states="offer_accepted" name="set_as_sold" type="object" string="SOLD"/>
+                    <button states="offer_received" name="set_as_sold" type="object" string="SOLD"/>
 
-                    <button name="set_as_canceled" type="object" string="Canceled"/>
+                    <button name="set_as_canceled" type="object" string="Canceled"
+                        attrs="{'invisible':[('state','in',['sold','canceled'])]}"
+                    />
                     <field name="state" widget="statusbar"
                            statusbar_visible="new,offer_received,offer_accepted,sold,canceled"/>
                 </header>
