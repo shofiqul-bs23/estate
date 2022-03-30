@@ -24,32 +24,34 @@
         <field name="arch" type="xml">
             <form string="TEST">
                 <sheet>
-                    <group>
-                        <field name="sequence" widget="handle"/>
-                        <field name="name"/>
-                        <field name="property_ids">
-                            <tree>
-                                <field name="name" string="Title"/>
-                                <field name="expected_price"/>
-                                <field name="state" string="Status"/>
-                            </tree>
-                        </field>
-                    </group>
+                    <notebook>
+                        <page string='Properties'>
+                            <field name="property_ids">
+                                <tree>
+                                    <field name="name" string="Title"/>
+                                    <field name="expected_price"/>
+                                    <field name="state" string="Status"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
+
+
             </form>
         </field>
     </record>
 
 
-<!--    <record id="estate_property_type_search" model="ir.ui.view">-->
-<!--        <field name="name">estate.property.type.search</field>-->
-<!--        <field name="model">estate.property.type</field>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <search string="Estate Property Type Search">-->
-<!--                <field name="name"/>-->
-<!--            </search>-->
-<!--        </field>-->
-<!--    </record>-->
+    <!--    <record id="estate_property_type_search" model="ir.ui.view">-->
+    <!--        <field name="name">estate.property.type.search</field>-->
+    <!--        <field name="model">estate.property.type</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <search string="Estate Property Type Search">-->
+    <!--                <field name="name"/>-->
+    <!--            </search>-->
+    <!--        </field>-->
+    <!--    </record>-->
 
 
 </odoo>
