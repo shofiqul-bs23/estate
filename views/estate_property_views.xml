@@ -1,8 +1,35 @@
 <odoo>
+
+    <!--    Testing Server ACtion-->
+    <record model="ir.actions.server" id="demo">
+        <field name="name">Testing Server Action</field>
+        <field name="model_id" ref="model_estate_property"/>
+        <field name="state">code</field>
+        <field name="code">
+            print("Hello World")
+        </field>
+    </record>
+
+
+    <!--    Contextual Meny action adding demo-->
+    <record model="ir.actions.server" id="action_reset_state">
+        <field name="name">Change_state_to_new</field>
+        <field name="model_id" ref="model_estate_property"/>
+        <!--        <field name="groups_id" eval="[(4, ref('estate_property'))]"/>-->
+        <field name="binding_model_id" ref="model_estate_property"/>
+        <field name="state">code</field>
+        <field name="binding_view_types">list</field>
+        <field name="code">
+            for rec in records:
+            rec.write({'state': 'new'})
+        </field>
+    </record>
+
+
     <record id="estate_property_action" model="ir.actions.act_window">
         <field name="name">Properties</field>
         <field name="res_model">estate.property</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,kanban</field>
 
         <field name="context">{'search_default_available': True}</field>
         <!-- Above line let us configure 'available' search filter to be set as default-->
@@ -46,8 +73,12 @@
                     <button states="offer_received" name="set_as_sold" type="object" string="SOLD"/>
 
                     <button name="set_as_canceled" type="object" string="Canceled"
-                        attrs="{'invisible':[('state','in',['sold','canceled'])]}"
+                            attrs="{'invisible':[('state','in',['sold','canceled'])]}"
                     />
+
+                    <button name="set_reset" type="object" string="Reset"/>
+                    <button name="%(demo)d" type="action" string="Print Hello"/>
+
                     <field name="state" widget="statusbar"
                            statusbar_visible="new,offer_received,offer_accepted,sold,canceled"/>
                 </header>
@@ -113,10 +144,51 @@
                             <field name="description"/>
                         </page>-->
                     </notebook>
-
-
                 </sheet>
             </form>
+        </field>
+    </record>
+
+
+    <record id="estate_property_kanban" model="ir.ui.view">
+        <field name="name">estate.property.kanban</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="property_type_id" records_draggable="false">
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <b>
+                                <field name="name" string="Name"/>
+                            </b>
+                            <br/>
+                            Expected Price:
+                            <field name='expected_price'/>
+                            <br/>
+
+                            <div t-if="record.state.raw_value == 'offer_received'">
+                                Best Offer:
+                                <field name="best_offer"/>
+                                <br/>
+                            </div>
+
+
+                            <div t-if="record.state.raw_value == 'offer_accepted'">
+                                Selling Price:
+                                <field name="selling_price"/>
+                                <br/>
+                            </div>
+
+                            <field name="tag_ids"/>
+                        </div>
+
+
+                    </t>
+
+                </templates>
+            </kanban>
+
         </field>
     </record>
 
@@ -140,5 +212,6 @@
             </search>
         </field>
     </record>
+
 
 </odoo>

@@ -99,16 +99,21 @@ class EstateProperty(models.Model):
 
     def set_as_sold(self):
         for record in self:
-            if self.state != 'canceled':
-                self.state = 'sold'
+            if record.state != 'canceled':
+                record.state = 'sold'
             else:
                 raise odoo.exceptions.UserError("Canceled property can not be sold!")
         return True
 
     def set_as_canceled(self):
         for record in self:
-            if self.state != 'sold':
-                self.state = "canceled"
+            if record.state != 'sold':
+                record.state = "canceled"
             else:
                 raise odoo.exceptions.UserError("Sold property can not be canceled!")
         return True
+
+    def set_reset(self):
+        for record in self:
+            # record.state = 'new'
+            record.write({'state':'new'})

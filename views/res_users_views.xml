@@ -8,18 +8,13 @@
             <xpath expr="//page[@name='access_rights']" position="after">
 
                 <page name="properties" string="Properties">
-                    <!--                                <group string="Multi Companies" attrs="{'invisible': [('companies_count', '&lt;=', 1)]}">-->
-                    <!--                                    <field string="Allowed Companies" name="company_ids" widget="many2many_tags" options="{'no_create': True}"/>-->
-                    <!--                                    <field string="Default Company" name="company_id" context="{'user_preference': 0}"/>-->
-                    <!--                                    <field string="Companies count" name="companies_count" invisible="1"/>-->
-                    <!--                                </group>-->
                     <field name="property_ids"/>
                 </page>
 
 
             </xpath>
 
-<!--            Below Code Insert field:test after field:tz which is inside page:preference-->
+            <!--            Below Code Insert field:test after field:tz which is inside page:preference-->
             <xpath expr="//page[@name='preferences']//field[@name='tz']" position="after">
 
                 <field name="test"/>

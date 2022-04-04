@@ -1,5 +1,7 @@
 <odoo>
 
+
+
     <record id="estate_property_offer_action" model="ir.actions.act_window">
         <field name="name">Estate Property Offer</field>
         <field name="res_model">estate.property.offer</field>
@@ -39,6 +41,7 @@
 
 <!--                <header>-->
 <!--                    <button type="action" name="%(estate_property_action)d" string="Property View"/>-->
+<!--                    <button type="opject" name="url_test" string="Google"/>-->
 <!--                </header>-->
 
                 <sheet>
