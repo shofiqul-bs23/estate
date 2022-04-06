@@ -1,0 +1,32 @@
+<odoo>
+
+    <record id="view_print_offers_wizard" model="ir.ui.view">
+        <field name="name">print.offers.wizard.form</field>
+        <field name="model">print.offers.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Wizard for helping printing offers !!! ">
+                <group>
+                    <field name="name"/>
+                </group>
+                <footer>
+                    <!--                    <button name="action_create_appointment" type="object" string="Create" class="btn-primary"/>-->
+                    <!--                    <button name="action_view_appointment" type="object" string="View Appointments" class="btn-primary"/>-->
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_print_offer_wizard" model="ir.actions.act_window">
+        <field name="name">Print Offers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">print.offers.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_print_offers_wizard"/>
+        <field name="target">new</field>
+
+<!--        <field name="binding_model_id" ref="model_estate_property"/>-->
+
+    </record>
+
+</odoo>

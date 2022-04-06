@@ -1,4 +1,3 @@
-
 {
     'name': 'estate',
     'version': '1.0',
@@ -17,6 +16,7 @@
     'data': [
         'security/ir.model.access.csv',
 
+        'wizard/print_offers_wizard_view.xml',
 
         'views/estate_property_views.xml',
         'views/estate_property_type_views.xml',
