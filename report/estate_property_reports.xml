@@ -1,0 +1,26 @@
+<odoo>
+    <record id="report_property_offer" model="ir.actions.report">
+        <field name="name">Property_Offer_Report</field>
+        <field name="model">estate.property</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">estate.report_property_offers</field>
+        <field name="report_file">estate.report_property_offers</field>
+<!--        <field name="print_report_name">'Registration Event - %s' % (object.name or 'Attendee').replace('/','')</field>-->
+<!--        <field name="paperformat_id" ref="event.paperformat_euro_lowmargin"/>-->
+        <field name="binding_model_id" ref="model_estate_property"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_property_offer_xlsx" model="ir.actions.report">
+        <field name="name">Property_Offer_Report_XLSX</field>
+        <field name="model">estate.property</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">estate.report_property_offers_xlsx</field>
+        <field name="report_file">estate.report_property_offers_xlsx</field>
+<!--        <field name="print_report_name">'Registration Event - %s' % (object.name or 'Attendee').replace('/','')</field>-->
+<!--        <field name="paperformat_id" ref="event.paperformat_euro_lowmargin"/>-->
+        <field name="binding_model_id" ref="model_estate_property"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

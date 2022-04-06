@@ -6,7 +6,9 @@
     'description': 'A Real Estate Module',
     'category': 'realestate',
     'author': 'shofiqul',
-    'depends': ['base'],
+    'depends': ['base',
+                'report_xlsx'
+                ],
     'installable': True,
     'license': 'LGPL-3',
     'auto_install': False,
@@ -22,6 +24,8 @@
         'views/estate_property_offer_views.xml',
         'views/res_users_views.xml',
 
+        'report/estate_property_reports.xml',
+        'report/estate_property_templates.xml',
         'views/estate_menus.xml'
 
     ]
