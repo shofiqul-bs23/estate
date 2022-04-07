@@ -44,7 +44,6 @@
                   decoration-success="state=='offer_received' or state=='offer_accepted'"
                   decoration-bf="state=='offer_accepted'"
                   decoration-muted="state=='sold'"
-
             >
                 <field name="state" optional="hide"/>
                 <field name="name"/>
@@ -78,7 +77,8 @@
 
                     <button name="set_reset" type="object" string="Reset"/>
                     <button name="%(demo)d" type="action" string="Print Hello"/>
-                     <button name="%(report_property_offer_xlsx)d" type="action" string="Print Xlsx"/>
+                    <button name="%(report_property_offer_xlsx)d" type="action" string="Print Xlsx"/>
+                    <button name="%(action_print_offer_wizard)d" type="action" string="Wizard"/>
 
                     <field name="state" widget="statusbar"
                            statusbar_visible="new,offer_received,offer_accepted,sold,canceled"/>

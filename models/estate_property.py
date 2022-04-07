@@ -50,7 +50,7 @@ class EstateProperty(models.Model):
 
     total_area = fields.Float(compute='_compute_total_area')
 
-    best_offer = fields.Float(compute='_compute_best_offer')
+    best_offer = fields.Float(compute='_compute_best_offer', default=0)
 
     _sql_constraints = [
         ('check_expected_price', 'CHECK(expected_price > 0)', 'The Expected Price must be strictely positive!'),
@@ -66,9 +66,15 @@ class EstateProperty(models.Model):
     def _compute_best_offer(self):
         for record in self:
             if len(record.offer_ids.mapped('price')):
-                record.best_offer = max(record.offer_ids.mapped('price'))
+                # record.best_offer = max(record.offer_ids.mapped('price'))
+                for x in record.offer_ids:
+                    if x.status != 'refused':
+                        record.best_offer = max(record.best_offer, x.price )
+                    else:
+                        record.best_offer = record.best_offer
+
             else:
-                record.best_offer = 0
+                record.best_offer = max(0, record.best_offer)
 
     # @api.onchange('offer_ids')
     # def _check_if_offer_received(self):
@@ -116,4 +122,4 @@ class EstateProperty(models.Model):
     def set_reset(self):
         for record in self:
             # record.state = 'new'
-            record.write({'state':'new'})
+            record.write({'state': 'new'})

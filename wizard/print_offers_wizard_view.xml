@@ -24,9 +24,8 @@
         <field name="view_mode">form</field>
         <field name="view_id" ref="view_print_offers_wizard"/>
         <field name="target">new</field>
-
 <!--        <field name="binding_model_id" ref="model_estate_property"/>-->
-
     </record>
+
 
 </odoo>
