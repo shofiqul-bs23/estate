@@ -15,7 +15,7 @@
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
             <tree string="Offers" editable="top" decoration-success="status=='accepted'"
-                  decoration-danger="status=='refused'">
+                  decoration-danger="status=='refused'" >
                 <field name="price"/>
                 <field name="partner_id"/>
                 <field name="property_type_id"/>
@@ -27,7 +27,8 @@
                 <button name="offer_reject" string="" type="object" icon="fa-times"
                 attrs = "{'invisible': [('status','in',['refused','accepted'])]}"
                 />
-                <field name="status" optional="hide"/>
+                <field name="status" />
+
             </tree>
         </field>
     </record>

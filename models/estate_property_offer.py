@@ -9,29 +9,27 @@ class EstatePropertyOffer(models.Model):
     _order = 'price desc'
     price = fields.Float()
     status = fields.Selection(copy=False,
-                              selection=[("accepted",'Accepted'),('refused',"Refused")]
+                              selection=[("accepted", 'Accepted'), ('refused', "Refused")]
                               )
-    partner_id = fields.Many2one('res.partner', required = True)
-    property_id = fields.Many2one('estate.property', required = True)
+    partner_id = fields.Many2one('res.partner', required=True)
+    property_id = fields.Many2one('estate.property', required=True)
 
-    validity = fields.Integer(default = 7)
-    date_deadline = fields.Date(compute = '_calculate_date_deadline', inverse = '_inverse_date_deadline')
-    property_type_id = fields.Many2one(related='property_id.property_type_id' ,
+    validity = fields.Integer(default=7)
+    date_deadline = fields.Date(compute='_calculate_date_deadline', inverse='_inverse_date_deadline')
+    property_type_id = fields.Many2one(related='property_id.property_type_id',
                                        store=True)
 
-
     _sql_constraints = [
-        ('check_offer_price','CHECK(price > 0)','Offer price must be strictly positive.')
+        ('check_offer_price', 'CHECK(price > 0)', 'Offer price must be strictly positive.')
     ]
 
-
-    @api.depends('validity','create_date')
+    @api.depends('validity', 'create_date')
     def _calculate_date_deadline(self):
         for record in self:
             if record.create_date:
                 record.date_deadline = fields.Date.add(record.create_date, days=record.validity)
             else:
-                record.date_deadline = fields.Date.add(fields.Datetime.now(),days=record.validity)
+                record.date_deadline = fields.Date.add(fields.Datetime.now(), days=record.validity)
 
     def _inverse_date_deadline(self):
         for record in self:
@@ -47,13 +45,57 @@ class EstatePropertyOffer(models.Model):
 
     def offer_accept(self):
         for record in self:
-            if record.status != 'refused' and record.property_id.state in ['new','offer_received']:
+            if record.status != 'refused' and record.property_id.state in ['new',
+                                                                           'offer_received','offer_accepted'] and record.property_id.num_accepted_property < record.property_type_id.num_can_accept:
+                record.property_id.num_accepted_property += 1
                 record.status = "accepted"
                 record.property_id.selling_price = record.price
                 record.property_id.buyer_id = record.partner_id
                 record.property_id.state = 'offer_accepted'
+
+                # record.property_id.offer_id_accepted.create([{
+                #     'price': record.price,
+                #     'status' : record.status,
+                #     'partner_id': record.partner_id.id,
+                #     'property_id': record.property_id.id,
+                #     'validity': record.validity,
+                #     'date_deadline': record.date_deadline,
+                #     'property_type_id': record.property_type_id.id
+                # }])
+
+                # temp = self.env['estate.property.offer'].create([{
+                #     'price': record.price,
+                #     'status' : record.status,
+                #     'partner_id': record.partner_id.id,
+                #     'property_id': record.property_id.id,
+                #     'validity': record.validity,
+                #     'date_deadline': record.date_deadline,
+                #     'property_type_id': record.property_type_id.id
+                # }])
+
+                t = record.property_id.offer_id_accepted.create([{
+
+                        'price': record.price,
+                        'status' : record.status,
+                        'partner_id': record.partner_id.id,
+                        'property_id': record.property_id.id,
+                        'validity': record.validity,
+                        'date_deadline': record.date_deadline,
+                        'property_type_id': record.property_type_id.id
+                }])
+                # t.write({
+                #     'price': 1212
+                # })
+
+                # record.property_id.offer_id_accepted.add(t)
+                self.unlink()
+                # t.unlink()
+
+
+
             else:
-                raise odoo.exceptions.UserError("The offer has been rejected before or The Property is no longer available.")
+                raise odoo.exceptions.UserError(
+                    "The offer has been rejected before or The Property is no longer available.")
         return True
 
     def offer_reject(self):
@@ -72,6 +114,4 @@ class EstatePropertyOffer(models.Model):
 
         if vals['price'] < self.env['estate.property'].browse(p_id).best_offer:
             raise odoo.exceptions.UserError("Offers can not be lower than the Current Best offer!")
-        return super(EstatePropertyOffer,self).create(vals)
-
-
+        return super(EstatePropertyOffer, self).create(vals)

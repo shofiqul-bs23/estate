@@ -21,7 +21,7 @@
         <field name="binding_view_types">list</field>
         <field name="code">
             for rec in records:
-            rec.write({'state': 'new'})
+                rec.write({'state': 'new'})
         </field>
     </record>
 
@@ -101,6 +101,7 @@
                             <field name="expected_price"/>
                             <field name="best_offer" string='Best Offer'/>
                             <field name="selling_price"></field>
+                            <field name="num_accepted_property"></field>
                         </group>
                     </group>
 
@@ -127,13 +128,25 @@
 
                         <page string="Offers">
                             <group>
+                                <!--                            <field name="offer_ids" string="Offers"-->
+                                <!--                                   attrs="{'readonly':[('state','in',['offer_accepted','sold','canceled'])]}"-->
+                                <!--                                    domain="[('status','=','accepted')]  -->
+                                <!--                                />-->
                                 <field name="offer_ids" string="Offers"
-                                       attrs="{'readonly':[('state','in',['offer_accepted','sold','canceled'])]}"
+                                       attrs="{'readonly':[('state','in',['offer_accepted','sold','canceled'])]}"/>
+                            </group>
+                        </page>
 
-                                />
+
+                        <page string=" Accepted Offers 002">
+                            <group>
+                                <!--                                <field name="offer_ids" readonly="1" string="Accpeted Offers"-->
+                                <!--                                       domain="[('status','=','accepted')]"/>-->
+                                <field name="offer_id_accepted" readonly="1" string="Accpeted Offers"/>
 
                             </group>
                         </page>
+
 
                         <page string="Other Info">
                             <group>

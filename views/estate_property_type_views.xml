@@ -42,8 +42,8 @@
                     <!--                            name="%(estate_property_offer_action)d">-->
                     <!--                        <field name="offer_count" string="Offers" widget="statinfo"/>-->
                     <!--                    </button>-->
-
-
+                    <span>Max offer acceptance number: </span>
+                    <field name="num_can_accept"/>
                     <notebook>
                         <page string='Properties'>
                             <field name="property_ids">

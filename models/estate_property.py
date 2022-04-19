@@ -12,6 +12,10 @@ class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'This is the basic model to hold information about the property.'
     _order = 'id desc'
+
+    # just for check
+    num_accepted_property = fields.Integer(default=0)
+
     name = fields.Char(required=True)
     description = fields.Text()
     postcode = fields.Char()
@@ -48,6 +52,9 @@ class EstateProperty(models.Model):
 
     offer_ids = fields.One2many('estate.property.offer', 'property_id', string='Offers')
 
+    offer_id_accepted = fields.Many2many('estate.property.offer', string="Accepted_Offers")
+    # offer_id_accepted = fields.One2many('estate.property.offer', 'property_id' , domain=[('status','=','accepted')], string="Frutas")
+
     total_area = fields.Float(compute='_compute_total_area')
 
     best_offer = fields.Float(compute='_compute_best_offer', default=0)
@@ -69,7 +76,7 @@ class EstateProperty(models.Model):
                 # record.best_offer = max(record.offer_ids.mapped('price'))
                 for x in record.offer_ids:
                     if x.status != 'refused':
-                        record.best_offer = max(record.best_offer, x.price )
+                        record.best_offer = max(record.best_offer, x.price)
                     else:
                         record.best_offer = record.best_offer
 
