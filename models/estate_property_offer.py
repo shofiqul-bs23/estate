@@ -63,26 +63,28 @@ class EstatePropertyOffer(models.Model):
                 #     'property_type_id': record.property_type_id.id
                 # }])
 
-                # temp = self.env['estate.property.offer'].create([{
-                #     'price': record.price,
-                #     'status' : record.status,
-                #     'partner_id': record.partner_id.id,
-                #     'property_id': record.property_id.id,
-                #     'validity': record.validity,
-                #     'date_deadline': record.date_deadline,
-                #     'property_type_id': record.property_type_id.id
-                # }])
-
-                t = record.property_id.offer_id_accepted.create([{
-
-                        'price': record.price,
-                        'status' : record.status,
-                        'partner_id': record.partner_id.id,
-                        'property_id': record.property_id.id,
-                        'validity': record.validity,
-                        'date_deadline': record.date_deadline,
-                        'property_type_id': record.property_type_id.id
+                temp = self.env['estate.property.offer'].create([{
+                    'price': record.price,
+                    'status' : record.status,
+                    'partner_id': record.partner_id.id,
+                    'property_id': record.property_id.id,
+                    'validity': record.validity,
+                    'date_deadline': record.date_deadline,
+                    'property_type_id': record.property_type_id.id
                 }])
+
+                record.property_id.offer_id_accepted = (6,0,temp.ids)
+
+                # t = record.property_id.offer_id_accepted.create([{
+                #
+                #         'price': record.price,
+                #         'status' : record.status,
+                #         'partner_id': record.partner_id.id,
+                #         'property_id': record.property_id.id,
+                #         'validity': record.validity,
+                #         'date_deadline': record.date_deadline,
+                #         'property_type_id': record.property_type_id.id
+                # }])
                 # t.write({
                 #     'price': 1212
                 # })
