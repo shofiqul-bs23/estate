@@ -67,14 +67,19 @@ class EstatePropertyOffer(models.Model):
                     'price': record.price,
                     'status' : record.status,
                     'partner_id': record.partner_id.id,
-                    'property_id': record.property_id.id,
+                    # 'property_id': record.property_id.id,
+                    'property_id': 16,
                     'validity': record.validity,
                     'date_deadline': record.date_deadline,
                     'property_type_id': record.property_type_id.id
                 }])
 
-                record.property_id.offer_id_accepted = (6,0,temp.ids)
-
+                current_ids = []
+                current_ids = record.property_id.offer_id_accepted.ids
+                current_ids = current_ids+temp.ids
+                current_ids
+                record.property_id.offer_id_accepted = [(6,0,current_ids)]
+                1
                 # t = record.property_id.offer_id_accepted.create([{
                 #
                 #         'price': record.price,
@@ -85,12 +90,12 @@ class EstatePropertyOffer(models.Model):
                 #         'date_deadline': record.date_deadline,
                 #         'property_type_id': record.property_type_id.id
                 # }])
-                # t.write({
+                # temp.write({
                 #     'price': 1212
                 # })
 
                 # record.property_id.offer_id_accepted.add(t)
-                self.unlink()
+                # self.unlink()
                 # t.unlink()
 
 
@@ -111,9 +116,14 @@ class EstatePropertyOffer(models.Model):
     @api.model
     def create(self, vals):
         p_id = vals['property_id']
-        property = self.env['estate.property'].browse(p_id)
-        property.state = 'offer_received'
 
-        if vals['price'] < self.env['estate.property'].browse(p_id).best_offer:
-            raise odoo.exceptions.UserError("Offers can not be lower than the Current Best offer!")
-        return super(EstatePropertyOffer, self).create(vals)
+        if p_id != 16:
+            property = self.env['estate.property'].browse(p_id)
+            property.state = 'offer_received'
+
+
+            if vals['price'] < self.env['estate.property'].browse(p_id).best_offer:
+                raise odoo.exceptions.UserError("Offers can not be lower than the Current Best offer!")
+            return super(EstatePropertyOffer, self).create(vals)
+        else:
+            return super(EstatePropertyOffer, self).create(vals)
